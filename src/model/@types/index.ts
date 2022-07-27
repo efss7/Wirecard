@@ -1,4 +1,4 @@
-export type paymentSlipInputDTO = {
+export type InputPaymentSlipDTO = {
   client_id: string;
   buyer_name: string;
   buyer_email: string;
@@ -7,16 +7,17 @@ export type paymentSlipInputDTO = {
   payment_type: string;
 };
 
-export type paymentCreditCardInputDTO = paymentSlipInputDTO & {
+export type InputPaymentCreditCardDTO = InputPaymentSlipDTO & {
   card_holder_name?: string;
   card_number?: string;
   card_expiration_date?: string;
   card_cvv?: string;
 };
 
-export type paymentSlipDB = paymentSlipInputDTO & {
+export type PaymentSlipDB = InputPaymentSlipDTO & {
   id: string;
   slipNumber: string;
 };
 
-export type paymentCreditCardDB = paymentCreditCardInputDTO & { id: string };
+export type PaymentCreditCardDB = InputPaymentCreditCardDTO & { id: string };
+

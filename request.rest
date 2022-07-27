@@ -1,0 +1,11 @@
+POST http://localhost:3003/payment/slip
+Content-Type: application/json
+
+{
+    "client_id":"id1",
+    "buyer_name":"Eric Felipe",
+    "buyer_email":"eric@dev.com",
+    "buyer_cpf":"98765424502",
+    "payment_amount":500,
+    "payment_type":"SLIP"
+}

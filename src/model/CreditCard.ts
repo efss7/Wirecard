@@ -1,7 +1,6 @@
 export default class CreditCard {
   constructor(
     private id: string,
-    private client_id: string,
     private buyer_name: string,
     private buyer_email: string,
     private buyer_cpf: string,
