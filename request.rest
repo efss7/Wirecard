@@ -9,3 +9,21 @@ Content-Type: application/json
     "payment_amount":500,
     "payment_type":"SLIP"
 }
+
+###
+
+POST http://localhost:3003/payment/creditCard
+Content-Type: application/json
+
+{
+    "client_id": "id1",
+    "buyer_name": "Eric Felipe",
+    "buyer_email": "eric@dev.com",
+    "buyer_cpf": "76325662305",
+    "payment_amount": 800,
+    "payment_type": "CREDITCARD",
+    "card_holder_name": "ERIC F SILVA",
+    "card_number": "7642387698236498",
+    "card_expiration_date": "09/24",
+    "card_cvv": "379"
+}

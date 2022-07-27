@@ -101,11 +101,14 @@ export class PaymentBusiness {
         slipNumber: this.slipNumber(),
       };
       await this.paymentData.insertPaymentSlip(payment);
-      const codeBars = { slipNumber: payment.slipNumber };
+      const codeBars = payment.slipNumber 
       return codeBars;
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
   };
 }
-export default new PaymentBusiness(new IdGenerator(), new PaymentData());
+export default new PaymentBusiness(
+  new IdGenerator(),
+  new PaymentData()
+  );

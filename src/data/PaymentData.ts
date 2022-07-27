@@ -23,4 +23,24 @@ export class PaymentData extends BaseDatabase {
       throw new CustomError(500, error.sqlMessage);
     }
   };
+  selectPaymentCreditCard = async (id:string) => {
+    try {
+      const result = await BaseDatabase.connection("wirecard_payment_creditcard")
+      .select("*")
+      .where({id})
+      return result
+    } catch (error:any) {
+      throw new CustomError(500, error.sqlMessage)
+    }
+  }
+  selectPaymentSlip = async (id:string)=>{
+    try {
+      const result = await BaseDatabase.connection("wirecard_payment_slip")
+      .select("*")
+      .where({id})
+      return result
+    } catch (error:any) {
+      throw new CustomError(500, error.sqlMessage)
+    }
+  }
 }
