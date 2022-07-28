@@ -101,14 +101,34 @@ export class PaymentBusiness {
         slipNumber: this.slipNumber(),
       };
       await this.paymentData.insertPaymentSlip(payment);
-      const codeBars = payment.slipNumber 
+      const codeBars = payment.slipNumber;
       return codeBars;
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
   };
+  selectPaymentCreditCard = async (id: string) => {
+    try {
+      if (!id) {
+        throw new CustomError(422, "Id inválido");
+      }
+      const result = await this.paymentData.selectPaymentCreditCard(id);
+      return result;
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message);
+    }
+  };
+  selectPaymentSlip = async (id: string) => {
+    try {
+      if (!id) {
+        throw new CustomError(422, "Id inválido");
+      }
+      const result = await this.paymentData.selectPaymentSlip(id);
+      return result;
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message);
+    }
+  };
 }
-export default new PaymentBusiness(
-  new IdGenerator(),
-  new PaymentData()
-  );
+
+export default new PaymentBusiness(new IdGenerator(), new PaymentData());

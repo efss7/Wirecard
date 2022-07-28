@@ -27,3 +27,9 @@ Content-Type: application/json
     "card_expiration_date": "09/24",
     "card_cvv": "379"
 }
+###
+GET  http://localhost:3003/payment/byCreditCard/09661108-a6a8-49d3-87e7-b2e0fb2dda4d
+Content-Type: application/json
+###
+GET  http://localhost:3003/payment/bySlip/9c86f13a-7829-429d-a51b-ba4d851b8ba6
+Content-Type: application/json
