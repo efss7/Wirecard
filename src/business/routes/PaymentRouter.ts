@@ -3,8 +3,6 @@ import paymentController from "../../controller/PaymentController";
 
 export const paymentRouter = Router()
 
-paymentRouter.post("/creditCard", paymentController.registerPaymentCreditCard)
-paymentRouter.post("/slip", paymentController.registerPaymentSlip)
+paymentRouter.post("/register", paymentController.registerPayment)
+paymentRouter.get("/status", paymentController.selectPayment)
 
-paymentRouter.get("/byCreditCard/:id", paymentController.selectPaymentCreditCard)
-paymentRouter.get("/bySlip/:id", paymentController.selectPaymentSlip )

@@ -1,9 +1,9 @@
 import { PaymentData } from "../data/PaymentData";
 import {
-  InputPaymentCreditCardDTO,
-  InputPaymentSlipDTO,
+  InputPaymentDTO,
   PaymentCreditCardDB,
   PaymentSlipDB,
+  PAYMENT_TYPE,
 } from "../model/@types";
 import IdGenerator from "../services/IdGenerator";
 import { CustomError } from "./errors/CustomError";
@@ -13,8 +13,19 @@ export class PaymentBusiness {
     private idGenerator: IdGenerator,
     private paymentData: PaymentData
   ) {}
+  payment = async (input:InputPaymentDTO) =>{
+    try {
 
-  paymentCardCredit = async (input: InputPaymentCreditCardDTO) => {
+      if(input.payment_type===PAYMENT_TYPE.CREDITCARD){
+        return this.paymentCardCredit(input)
+      }else{
+        return this.paymentSlip(input)    
+      }
+    } catch (error) {
+      
+    }
+  }
+  paymentCardCredit = async (input: InputPaymentDTO) => {
     try {
       const {
         client_id,
@@ -57,23 +68,13 @@ export class PaymentBusiness {
         card_cvv,
       };
       await this.paymentData.insertPaymentCard(payment);
+      return {message:"Pagamento registrado com sucesso"}
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
   };
-  private codeBars = (code: number) => {
-    return Math.floor(Math.random() * code);
-  };
-  private slipNumber = () => {
-    const numbers = "0123456789";
-    let codeBars = "";
-    for (let i = 0; i <= 47; i++) {
-      const index = Math.floor(this.codeBars(numbers.length - 1));
-      codeBars += numbers[index];
-    }
-    return codeBars;
-  };
-  paymentSlip = async (input: InputPaymentSlipDTO) => {
+  
+  paymentSlip = async (input: InputPaymentDTO) => {
     try {
       const {
         client_id,
@@ -102,29 +103,34 @@ export class PaymentBusiness {
       };
       await this.paymentData.insertPaymentSlip(payment);
       const codeBars = payment.slipNumber;
-      return codeBars;
+      return {"Código de barras":codeBars} //colocar _ no lugar do espaço 
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
   };
-  selectPaymentCreditCard = async (id: string) => {
-    try {
-      if (!id) {
-        throw new CustomError(422, "Id inválido");
-      }
-      const result = await this.paymentData.selectPaymentCreditCard(id);
-      return result;
-    } catch (error: any) {
-      throw new CustomError(error.statusCode, error.message);
-    }
+  private codeBars = (code: number) => {
+    return Math.floor(Math.random() * code);
   };
-  selectPaymentSlip = async (id: string) => {
+  private slipNumber = () => {
+    const numbers = "0123456789";
+    let codeBars = "";
+    for (let i = 0; i <= 47; i++) {
+      const index = Math.floor(this.codeBars(numbers.length - 1));
+      codeBars += numbers[index];
+    }
+    return codeBars;
+  };
+  selectPayment = async (id: string, payment_type:string) => {
+    console.log(id, payment_type)
     try {
-      if (!id) {
-        throw new CustomError(422, "Id inválido");
+      if (!id || !payment_type) {
+        throw new CustomError(422, "Parâmetros inválidos");
       }
-      const result = await this.paymentData.selectPaymentSlip(id);
-      return result;
+      if(payment_type === PAYMENT_TYPE.CREDITCARD){
+        return await this.paymentData.selectPaymentCreditCard(id);
+      }else{
+        return this.paymentData.selectPaymentSlip(id)
+      }
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }

@@ -1,32 +1,31 @@
 import { Request, Response } from "express";
 import paymentBusiness, { PaymentBusiness } from "../business/PaymentBusiness";
-import {
-  InputPaymentCreditCardDTO,
-  InputPaymentSlipDTO,
-} from "../model/@types";
+import { InputPaymentDTO } from "../model/@types";
+
 
 export class PaymentController {
-  registerPaymentSlip = async (req: Request, res: Response): Promise<void> => {
-    const input: InputPaymentSlipDTO = {
-      client_id: req.body.client_id,
-      buyer_name: req.body.buyer_name,
-      buyer_email: req.body.buyer_email,
-      buyer_cpf: req.body.buyer_cpf,
-      payment_amount: req.body.payment_amount,
-      payment_type: req.body.payment_type,
-    };
-    try {
-      const result = await paymentBusiness.paymentSlip(input);
-      res.status(201).send({ "Número do boleto": result });
-    } catch (error: any) {
-      res.status(error.statusCode || 400).send({ error: error.message });
-    }
-  };
-  registerPaymentCreditCard = async (
+  // registerPaymentSlip = async (req: Request, res: Response): Promise<void> => {
+  //   const input: InputPaymentSlipDTO = {
+  //     client_id: req.body.client_id,
+  //     buyer_name: req.body.buyer_name,
+  //     buyer_email: req.body.buyer_email,
+  //     buyer_cpf: req.body.buyer_cpf,
+  //     payment_amount: req.body.payment_amount,
+  //     payment_type: req.body.payment_type,
+  //   };
+  //   try {
+  //     const result = await paymentBusiness.paymentSlip(input);
+  //     res.status(201).send({ "Número do boleto": result });
+  //   } catch (error: any) {
+  //     res.status(error.statusCode || 400).send({ error: error.message });
+  //   }
+  // };
+
+  registerPayment = async (
     req: Request,
     res: Response
   ): Promise<void> => {
-    const input: InputPaymentCreditCardDTO = {
+    const input: InputPaymentDTO = {
       client_id: req.body.client_id,
       buyer_name: req.body.buyer_name,
       buyer_email: req.body.buyer_email,
@@ -39,26 +38,18 @@ export class PaymentController {
       card_cvv: req.body.card_cvv,
     };
     try {
-      await paymentBusiness.paymentCardCredit(input);
-      res.status(201).send({ message: "Pagamento registrado com sucesso" });
-    } catch (error: any) {
-      res.status(error.statusCode || 400).send({ error: error.message });
-    }
-  };
-  selectPaymentSlip = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const id = req.params.id as string;
-      const result = await paymentBusiness.selectPaymentSlip(id);
-      res.status(200).send(result);
+      const result = await paymentBusiness.payment(input);
+      res.status(201).send(result);
     } catch (error: any) {
       res.status(error.statusCode || 400).send({ error: error.message });
     }
   };
 
-  selectPaymentCreditCard = async (req: Request,res: Response): Promise<void> => {
+  selectPayment = async (req: Request, res: Response): Promise<void> => {
     try {
-      const id = req.params.id as string;
-      const result = await paymentBusiness.selectPaymentCreditCard(id);
+      const id = req.query.id as string;
+      const typePayment = req.query.payment_type as string;
+      const result = await paymentBusiness.selectPayment(id, typePayment);
       res.status(200).send(result);
     } catch (error: any) {
       res.status(error.statusCode || 400).send({ error: error.message });
