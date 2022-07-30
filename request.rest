@@ -5,12 +5,12 @@ Content-Type: application/json
     "client_id": "id1",
     "buyer_name": "Eric Felipe",
     "buyer_email": "eric@dev.com",
-    "buyer_cpf": "76325662305",
-    "payment_amount": 980,
+    "buyer_cpf": "456.092.074-49",
+    "payment_amount": 400,
     "payment_type": "CREDITCARD",
     "card_holder_name": "Eric Felipe",
     "card_number": "6786782398328703",
-    "card_expiration_date": "09/27",
+    "card_expiration_date": "12/2030",
     "card_cvv": "938"
 }
 ###

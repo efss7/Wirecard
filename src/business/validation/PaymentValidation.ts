@@ -1,4 +1,4 @@
-import { InputPaymentDTO, PAYMENT_TYPE } from "../../model/@types";
+import { CreatePaymentDTO, InputPaymentDTO, PAYMENT_TYPE, selectPaymentDTO } from "../../model/@types";
 import { CustomError } from "../errors/CustomError";
 
 export class PaymentValidation {
@@ -17,8 +17,9 @@ export class PaymentValidation {
       input.card_cvv
     );
   }
-  selectPayment(input: InputPaymentDTO) {
-    this.id(input.)
+  selectPayment(input: selectPaymentDTO) {
+    this.id(input.id)
+    this.payment_type(input.payment_type)
   }
 
   private client_id = (client_id: string) => {
@@ -66,9 +67,9 @@ export class PaymentValidation {
   private CreditCard = (
     payment_type: string,
     card_holder_name: string | undefined,
-    card_number: number | undefined,
+    card_number: string | undefined,
     card_expiration_date: string | undefined,
-    card_cvv: number | undefined
+    card_cvv: string | undefined
   ) => {
     if (payment_type === PAYMENT_TYPE.CREDITCARD) {
       if (typeof card_holder_name !== "string" || !card_holder_name) {
@@ -86,15 +87,14 @@ export class PaymentValidation {
           "'card_expiration_date' do cartão de crédito inválido"
         );
       }
-
       if (this.expiration_dateCheck(card_expiration_date)) {
-        throw new CustomError(422, "Cartão de crédito expirado");
+        throw new CustomError(422, "Formato de data inválido");
       }
 
       if (!card_cvv) {
         throw new CustomError(422, "Missing card CVV");
       }
-      if (typeof card_cvv !== "number" || card_cvv.toString().length !== 3) {
+      if (typeof card_cvv !== "string" || card_cvv.toString().length !== 3) {
         throw new CustomError(422, "CVV do cartão inválido");
       }
     }
@@ -124,6 +124,7 @@ export class PaymentValidation {
     const card_expiration_date = new Date(
       card_expiration.split("/").reverse().join("-")
     ).getTime();
+
     if (card_expiration_date - currentDate < 0 || isNaN(card_expiration_date)) {
       return true;
     }

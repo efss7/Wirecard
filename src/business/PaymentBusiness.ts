@@ -7,20 +7,25 @@ import {
 } from "../model/@types";
 import IdGenerator from "../services/IdGenerator";
 import { CustomError } from "./errors/CustomError";
+import { PaymentValidation } from "./validation/PaymentValidation";
 
 export class PaymentBusiness {
   constructor(
     private idGenerator: IdGenerator,
-    private paymentData: PaymentData
+    private paymentData: PaymentData,
+    private paymentValidation:PaymentValidation
   ) {}
   payment = async (input: InputPaymentDTO) => {
     try {
+      this.paymentValidation.createPayment(input)
       if (input.payment_type === PAYMENT_TYPE.CREDITCARD) {
         return this.paymentCardCredit(input);
       } else {
         return this.paymentSlip(input);
       }
-    } catch (error) {}
+    } catch (error:any) {
+      throw new CustomError(error.statusCode, error.message)
+    }
   };
   paymentCardCredit = async (input: InputPaymentDTO) => {
     try {
@@ -98,8 +103,8 @@ export class PaymentBusiness {
     return codeBars;
   };
   selectPayment = async (id: string, payment_type: string) => {
-    console.log(id, payment_type);
     try {
+      this.paymentValidation.selectPayment({id, payment_type})
       if (payment_type === PAYMENT_TYPE.CREDITCARD) {
         return await this.paymentData.selectPaymentCreditCard(id);
       } else {
@@ -111,4 +116,4 @@ export class PaymentBusiness {
   };
 }
 
-export default new PaymentBusiness(new IdGenerator(), new PaymentData());
+export default new PaymentBusiness(new IdGenerator(), new PaymentData(), new PaymentValidation());
