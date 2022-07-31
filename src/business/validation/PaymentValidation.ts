@@ -92,7 +92,7 @@ export class PaymentValidation {
       }
 
       if (!card_cvv) {
-        throw new CustomError(422, "Missing card CVV");
+        throw new CustomError(422, "'card_cvv' do cartão de crédito inválido");
       }
       if (typeof card_cvv !== "string" || card_cvv.toString().length !== 3) {
         throw new CustomError(422, "CVV do cartão inválido");

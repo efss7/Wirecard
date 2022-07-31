@@ -116,4 +116,7 @@ export class PaymentBusiness {
   };
 }
 
-export default new PaymentBusiness(new IdGenerator(), new PaymentData(), new PaymentValidation());
+export default new PaymentBusiness(
+  new IdGenerator(),
+  new PaymentData(),
+  new PaymentValidation());
