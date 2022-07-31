@@ -1,8 +1,4 @@
-import PaymentBusiness from "../src/business/PaymentBusiness";
 import { PaymentValidation } from "../src/business/validation/PaymentValidation";
-import IdGeneratorMock from "./mocks/idGeneratorMock";
-import { PaymentDataMock } from "./mocks/PaymentDataMock";
-import { PaymentValidationMock } from "./mocks/PaymentValidationMock";
 
 const paymentValidationMock = new PaymentValidation();
 

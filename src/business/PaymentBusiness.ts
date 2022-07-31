@@ -56,7 +56,7 @@ export class PaymentBusiness {
         card_cvv,
       };
       await this.paymentData.insertPaymentCard(payment);
-      return { message: "Pagamento registrado com sucesso" };
+      return { message: "Pagamento registrado com sucesso", id, payment_type };
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
@@ -85,7 +85,7 @@ export class PaymentBusiness {
       };
       await this.paymentData.insertPaymentSlip(payment);
       const codeBars = payment.slipNumber;
-      return { "Código de barras": codeBars }; //colocar _ no lugar do espaço
+      return { "Código de barras": codeBars, id, payment_type }; 
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message);
     }
