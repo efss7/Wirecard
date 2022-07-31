@@ -2,17 +2,17 @@ POST http://localhost:3003/payment/register
 Content-Type: application/json
 
 {
-    "client_id": "id1",
-    "buyer_name": "Eric Felipe",
-    "buyer_email": "eric@dev.com",
-    "buyer_cpf": "456.092.074-49",
-    "payment_amount": 9100,
-    "payment_type": "CREDITCARD",
-    "card_holder_name": "Eric Felipe S Silva",
-    "card_number": "6786782398328703",
-    "card_expiration_date": "12/2030",
-    "card_cvv": "345"
+    "client_id": "pnVLNKXOcuoltzNzKKbk3Qe8nwIkidp",
+    "buyer_name": "Michael Jackson",
+    "buyer_email": "beatit@dev.com",
+    "buyer_cpf": "928.092.074-49",
+    "payment_amount":10,
+    "payment_type" :"CREDITCARD",
+    "card_holder_name":"M JACKSON", 
+    "card_number":3264567235473290, 
+    "card_expiration_date":"04/2030", 
+    "card_cvv":"428"
 }
 ###
-GET  http://localhost:3003/payment/status?id=817b5c49-1ec5-4e97-8677-9648e81c7bc7&payment_type=CREDITCARD
+GET  http://localhost:3003/payment/status?id=eb61cbf4-040c-440f-ab6e-89185f46b4ea&payment_type=CREDITCARD
 Content-Type: application/json
