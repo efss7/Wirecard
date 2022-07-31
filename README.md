@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <p>
 <a href="#sobre">Sobre</a> |
 <a href="#documentação">Documentação</a> |
@@ -141,6 +141,3 @@ GET  http://localhost:3003/payment/status?id=eb61cbf4-040c-440f-ab6e-89185f46b4e
 </table>
 
 <a href="#voltar">Voltar para o topo ⬆️</a>
-=======
-https://documenter.getpostman.com/view/20351432/UzdzTR9c
->>>>>>> 559c885bd445aad14a7a00d99daf06021845a805
